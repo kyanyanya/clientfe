@@ -3,7 +3,7 @@ function Layout() {
 
   return (
     <div>
-      hello world with hoidanit update
+      hello world with hoidanit
     </div>
   )
 }
