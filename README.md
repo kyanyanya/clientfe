@@ -1,4 +1,4 @@
-# React Test Fresher (TS) Starter Template
+# React Test Fresher (TS) FINAL PROJECT
 Template này được sử dụng cho series React Test Fresher (TS) của tác giả Hỏi Dân IT (Eric)
 
 ### Môi trường chạy dự án: Node.js v20.14.0
