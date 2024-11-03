@@ -6,7 +6,6 @@ import { ProTable } from '@ant-design/pro-components';
 import { Button } from 'antd';
 import { useRef, useState } from 'react';
 
-
 const columns: ProColumns<IUserTable>[] = [
     {
         dataIndex: 'index',
@@ -107,6 +106,10 @@ const TableUser = () => {
                             query += `&createdAt>=${createDateRange[0]}&createdAt<=${createDateRange[1]}`
                         }
 
+                    }
+
+                    if (sort && sort.createdAt) {
+                        query += `&sort=${sort.createdAt === "ascend" ? "createdAt" : "-createdAt"}`
                     }
 
                     const res = await getUsersAPI(query);
