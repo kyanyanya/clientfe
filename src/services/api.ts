@@ -40,4 +40,14 @@ export const createUserAPI = (fullName: string, email: string,
         { fullName, email, password, phone })
 }
 
+export const bulkCreateUserAPI = (hoidanit: {
+    fullName: string;
+    password: string;
+    email: string;
+    phone: string;
+}[]) => {
+    const urlBackend = "/api/v1/user/bulk-create";
+    return axios.post<IBackendRes<IResponseImport>>(urlBackend, hoidanit)
+}
+
 
