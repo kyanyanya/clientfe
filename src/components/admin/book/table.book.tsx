@@ -8,6 +8,7 @@ import { ProTable } from '@ant-design/pro-components';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { dateRangeValidate } from '@/services/helper';
 import { getBooksAPI } from '@/services/api';
+import CreateBook from './create.book';
 
 
 type TSearch = {
@@ -247,6 +248,11 @@ const TableBook = () => {
                 setOpenViewDetail={setOpenViewDetail}
                 dataViewDetail={dataViewDetail}
                 setDataViewDetail={setDataViewDetail}
+            />
+
+            <CreateBook
+                openModalCreate={openModalCreate}
+                setOpenModalCreate={setOpenModalCreate}
             />
         </>
     )
