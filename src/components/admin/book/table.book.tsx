@@ -253,6 +253,7 @@ const TableBook = () => {
             <CreateBook
                 openModalCreate={openModalCreate}
                 setOpenModalCreate={setOpenModalCreate}
+                refreshTable={refreshTable}
             />
         </>
     )
