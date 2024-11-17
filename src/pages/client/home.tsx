@@ -9,10 +9,11 @@ import { useEffect, useState } from 'react';
 import 'styles/home.scss';
 
 type FieldType = {
-    fullName: string;
-    password: string;
-    email: string;
-    phone: string;
+    range: {
+        from: number;
+        to: number
+    }
+    category: string[]
 };
 
 
@@ -82,9 +83,29 @@ const HomePage = () => {
 
     const handleChangeFilter = (changedValues: any, values: any) => {
         console.log(">>> check handleChangeFilter", changedValues, values)
+        //only fire if category changes
+        if (changedValues.category) {
+            const cate = values.category;
+            if (cate && cate.length > 0) {
+                const f = cate.join(',');
+                setFilter(`category=${f}`)
+            } else {
+                //reset data -> fetch all
+                setFilter('');
+            }
+        }
+
     }
 
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+        if (values?.range?.from >= 0 && values?.range?.to >= 0) {
+            let f = `price>=${values?.range?.from}&price<=${values?.range?.to}`;
+            if (values?.category?.length) {
+                const cate = values?.category?.join(',');
+                f += `&category=${cate}`
+            }
+            setFilter(f);
+        }
 
     }
 
@@ -94,26 +115,27 @@ const HomePage = () => {
 
     const items = [
         {
-            key: '1',
+            key: "sort=-sold",
             label: `Phổ biến`,
             children: <></>,
         },
         {
-            key: '2',
+            key: 'sort=-updatedAt',
             label: `Hàng Mới`,
             children: <></>,
         },
         {
-            key: '3',
+            key: 'sort=price',
             label: `Giá Thấp Đến Cao`,
             children: <></>,
         },
         {
-            key: '4',
+            key: 'sort=-price',
             label: `Giá Cao Đến Thấp`,
             children: <></>,
         },
     ];
+
 
     return (
         <div style={{ background: '#efefef', padding: "20px 0" }}>
@@ -125,7 +147,11 @@ const HomePage = () => {
                                 <span> <FilterTwoTone />
                                     <span style={{ fontWeight: 500 }}> Bộ lọc tìm kiếm</span>
                                 </span>
-                                <ReloadOutlined title="Reset" onClick={() => form.resetFields()} />
+                                <ReloadOutlined title="Reset" onClick={() => {
+                                    form.resetFields();
+                                    setFilter('');
+                                }}
+                                />
                             </div>
                             <Divider />
                             <Form
@@ -228,6 +254,7 @@ const HomePage = () => {
                                         items={items}
                                         onChange={(value) => { setSortQuery(value) }}
                                         style={{ overflowX: "auto" }}
+
                                     />
                                 </Row>
                                 <Row className='customize-row'>
@@ -264,7 +291,6 @@ const HomePage = () => {
                             </div>
                         </Spin>
                     </Col>
-
                 </Row>
             </div>
         </div>

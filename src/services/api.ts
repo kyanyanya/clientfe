@@ -68,7 +68,7 @@ export const getBooksAPI = (query: string) => {
     return axios.get<IBackendRes<IModelPaginate<IBookTable>>>(urlBackend,
         {
             headers: {
-                delay: 3000
+                delay: 1000
             }
         }
     )
