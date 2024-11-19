@@ -1,4 +1,4 @@
-import { Row, Col, Rate, Divider } from 'antd';
+import { Row, Col, Rate, Divider, App } from 'antd';
 import ImageGallery from 'react-image-gallery';
 import { useEffect, useRef, useState } from 'react';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
@@ -28,7 +28,8 @@ const BookDetail = (props: IProps) => {
     const refGallery = useRef<ImageGallery>(null);
     const [currentQuantity, setCurrentQuantity] = useState<number>(1);
 
-    const { carts, setCarts } = useCurrentApp();
+    const { setCarts } = useCurrentApp();
+    const { message } = App.useApp();
 
     // const images = [
     //     {
@@ -178,9 +179,9 @@ const BookDetail = (props: IProps) => {
             //sync React Context
             setCarts(data);
         }
+        message.success("Thêm sản phẩm vào giỏ hàng thành công.")
     }
 
-    console.log(carts)
     return (
         <div style={{ background: '#efefef', padding: "20px 0" }}>
             <div className='view-detail-book' style={{ maxWidth: 1440, margin: '0 auto', minHeight: "calc(100vh - 150px)" }}>
