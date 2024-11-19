@@ -5,6 +5,7 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { BsCartPlus } from 'react-icons/bs';
 import 'styles/book.scss';
 import ModalGallery from './modal.gallery';
+import { useCurrentApp } from '@/components/context/app.context';
 
 interface IProps {
     currentBook: IBookTable | null;
@@ -26,6 +27,8 @@ const BookDetail = (props: IProps) => {
 
     const refGallery = useRef<ImageGallery>(null);
     const [currentQuantity, setCurrentQuantity] = useState<number>(1);
+
+    const { carts, setCarts } = useCurrentApp();
 
     // const images = [
     //     {
@@ -139,7 +142,45 @@ const BookDetail = (props: IProps) => {
         }
     }
 
+    const handleAddToCart = () => {
+        //update localStorage
+        const cartStorage = localStorage.getItem("carts");
+        if (cartStorage && currentBook) {
+            //update
+            const carts = JSON.parse(cartStorage) as ICart[];
 
+            //check exist
+            let isExistIndex = carts.findIndex(c => c._id === currentBook?._id);
+            if (isExistIndex > -1) {
+                carts[isExistIndex].quantity =
+                    carts[isExistIndex].quantity + currentQuantity;
+            } else {
+                carts.push({
+                    quantity: currentQuantity,
+                    _id: currentBook._id,
+                    detail: currentBook
+                })
+            }
+
+            localStorage.setItem("carts", JSON.stringify(carts));
+
+            //sync React Context
+            setCarts(carts);
+        } else {
+            //create
+            const data = [{
+                _id: currentBook?._id!,
+                quantity: currentQuantity,
+                detail: currentBook!
+            }]
+            localStorage.setItem("carts", JSON.stringify(data))
+
+            //sync React Context
+            setCarts(data);
+        }
+    }
+
+    console.log(carts)
     return (
         <div style={{ background: '#efefef', padding: "20px 0" }}>
             <div className='view-detail-book' style={{ maxWidth: 1440, margin: '0 auto', minHeight: "calc(100vh - 150px)" }}>
@@ -198,7 +239,7 @@ const BookDetail = (props: IProps) => {
                                     </span>
                                 </div>
                                 <div className='buy'>
-                                    <button className='cart'>
+                                    <button className='cart' onClick={() => handleAddToCart()}>
                                         <BsCartPlus className='icon-cart' />
                                         <span>Thêm vào giỏ hàng</span>
                                     </button>
