@@ -144,3 +144,8 @@ export const createOrderAPI = (
     return axios.post<IBackendRes<IRegister>>(urlBackend,
         { name, address, phone, totalPrice, type, detail })
 }
+
+export const getHistoryAPI = () => {
+    const urlBackend = `/api/v1/history`;
+    return axios.get<IBackendRes<IHistory[]>>(urlBackend)
+}

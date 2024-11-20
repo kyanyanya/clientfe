@@ -50,7 +50,9 @@ const OrderPage = () => {
                             </Button>,
 
                             <Button key="history">
-                                Lịch sử mua hàng
+                                <Link to={"/history"} type="primary">
+                                    Lịch sử mua hàng
+                                </Link>
                             </Button>,
                         ]}
                     />
