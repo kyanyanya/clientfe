@@ -46,10 +46,10 @@ const ImportUser = (props: IProps) => {
         async onChange(info) {
             const { status } = info.file;
             if (status !== 'uploading') {
-                console.log(info.file, info.fileList);
+                // console.log(info.file, info.fileList);
             }
             if (status === 'done') {
-                console.log(info)
+                // console.log(info)
                 message.success(`${info.file.name} file uploaded successfully.`);
                 if (info.fileList && info.fileList.length > 0) {
                     const file = info.fileList[0].originFileObj!;
@@ -92,7 +92,7 @@ const ImportUser = (props: IProps) => {
             }
         },
         onDrop(e) {
-            console.log('Dropped files', e.dataTransfer.files);
+            // console.log('Dropped files', e.dataTransfer.files);
         },
     };
 
